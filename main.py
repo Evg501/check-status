@@ -6,6 +6,7 @@ from config_hidden import *
 import time
 import socket
 from urllib.parse import urlparse
+from pack.printcolor import *
 
 def get_host_from_url(url):
     parsed_url = urlparse(url)
@@ -29,7 +30,12 @@ def cls():
 def check_url(uri):
     r = requests.head(uri, headers=headers, timeout=5, allow_redirects=True)
     host = get_host_from_url(uri)
-    print(uri, host, socket.gethostbyname(host), str(r.status_code))
+    #print(uri, host, socket.gethostbyname(host), str(r.status_code))
+    if r.status_code==200:
+        fmt_sc = '7;30;42'
+    else:
+        fmt_sc = '7;30;41'
+    print(format_c(text=uri, format='7;30;46'), format_c(text=host, format='7;30;45'), format_c(text=socket.gethostbyname(host), format='7;30;44'), format_c(text=str(r.status_code), format=fmt_sc)) 
     return host, socket.gethostbyname(host), str(r.status_code)
 
 while True:
