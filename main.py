@@ -6,7 +6,7 @@ from config_hidden import *
 import time
 import socket
 from urllib.parse import urlparse
-from pack.printcolor import *
+from rich import print
 
 def get_host_from_url(url):
     parsed_url = urlparse(url)
@@ -32,10 +32,11 @@ def check_url(uri):
     host = get_host_from_url(uri)
     #print(uri, host, socket.gethostbyname(host), str(r.status_code))
     if r.status_code==200:
-        fmt_sc = '7;30;42'
+        fmt_sc = '[green]'
     else:
-        fmt_sc = '7;30;41'
-    print(format_c(text=uri, format='7;30;46'), format_c(text=host, format='7;30;45'), format_c(text=socket.gethostbyname(host), format='7;30;44'), format_c(text=str(r.status_code), format=fmt_sc)) 
+        fmt_sc = '[red]'
+    #print(format_c(text=uri, format='7;30;46'), format_c(text=host, format='7;30;45'), format_c(text=socket.gethostbyname(host), format='7;30;44'), format_c(text=str(r.status_code), format=fmt_sc)) 
+    print('[deep_pink4]'+uri, '[blue]'+host, '[dark_orange3]'+socket.gethostbyname(host), fmt_sc+ str(r.status_code))
     return host, socket.gethostbyname(host), str(r.status_code)
 
 while True:
